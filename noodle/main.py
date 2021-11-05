@@ -15,9 +15,9 @@ app = FastAPI()
 order_q = queue.Queue()
 
 
-@app.get("/health")
-def health():
-    return {"message": "Healthy"}
+@app.get("/")
+def root():
+    return {"message": "Welcome"}
 
 
 @app.post("/order")
