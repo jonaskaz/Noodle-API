@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from config import GAME_MODE, ORDER_MODE, REDIS_URL
+from .config import GAME_MODE, ORDER_MODE, REDIS_URL
 from pydantic import BaseModel
 from typing import Optional
 import queue

@@ -14,7 +14,6 @@ pytest tests/
 ```
 ## Running the API
 ```
-cd noodle
-uvicorn main:app --reload
+uvicorn noodle.main:app --reload
 ```
 Navigate to http://127.0.0.1:8000/docs#/ to view routes
