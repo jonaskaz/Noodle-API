@@ -23,7 +23,7 @@ def root():
 @app.post("/order")
 def create_order(payload: Payload):
     order_q.put(payload)
-    return {"message": payload}
+    return payload
 
 
 @app.get("/order")
@@ -32,5 +32,5 @@ def get_latest_order():
         order = {}
     else:
         order = order_q.get()
-    return {"message": order}
+    return order
 
