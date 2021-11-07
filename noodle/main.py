@@ -8,7 +8,7 @@ import queue
 class Payload(BaseModel):
     mode: int
     flavor: str
-    toppings: Optional[list] = None
+    toppings: Optional[list] = []
 
 
 app = FastAPI()
