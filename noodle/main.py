@@ -1,8 +1,11 @@
+from threading import current_thread
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from .config import GAME_MODE, ORDER_MODE
 from pydantic import BaseModel
 from typing import Optional
 import queue
+
 
 
 class Payload(BaseModel):
@@ -12,25 +15,38 @@ class Payload(BaseModel):
 
 
 app = FastAPI()
-order_q = queue.Queue()
 
+origins = [
+    "http://localhost:3000",
+    "localhost:3000"
+]
 
-@app.get("/")
-def root():
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
+orders = queue.Queue()
+
+@app.get("/", tags=["root"])
+async def read_root() -> dict:
     return {"message": "Welcome"}
 
-
-@app.post("/order")
-def create_order(payload: Payload):
-    order_q.put(payload)
-    return payload
-
-
-@app.get("/order")
-def get_latest_order():
-    if order_q.empty():
-        order = {}
+@app.get("/order", tags=["orders"])
+async def get_order() -> dict:
+    if orders.empty():
+        current_order = {}
     else:
-        order = order_q.get()
-    return order
+        current_order = orders.get()
+    return current_order
+
+@app.post("/order", tags=["orders"])
+async def post_order(order: Payload) -> dict:
+    orders.put(order)
+    return {
+        "data": { "Order successfully posted." }
+    }
 
