@@ -19,9 +19,9 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "localhost:3000",
-    "http://cup-noodle-app.herokuapp.com",
-    "https://cup-noodle-app.herokuapp.com",
-    "cup-noodle-app.herokuapp.com",
+    "http://cup-noodle-app.herokuapp.com/order",
+    "https://cup-noodle-app.herokuapp.com/order",
+    "cup-noodle-app.herokuapp.com/order",
 
 ]
 
